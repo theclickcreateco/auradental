@@ -1,0 +1,16 @@
+{
+  "name": "Aura Dental Collective",
+  "short_name": "Aura Dental",
+  "description": "High-end cosmetic dental studio offering bespoke aesthetic dentistry.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4fafa",
+  "theme_color": "#006a63",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Aura Dental Collective | Cosmetic Dental Studio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#006a63">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#277771",
+                        "secondary-fixed": "#84f5e8",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#136964",
+                        "on-tertiary-fixed-variant": "#00504b",
+                        "secondary-container": "#81f3e5",
+                        "surface-tint": "#006a63",
+                        "surface-container-low": "#eff5f5",
+                        "surface-variant": "#dde4e4",
+                        "on-primary-container": "#007971",
+                        "on-secondary-fixed": "#00201d",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#71d7cd",
+                        "on-primary-fixed-variant": "#00504a",
+                        "error-container": "#ffdad6",
+                        "surface": "#f4fafa",
+                        "surface-bright": "#f4fafa",
+                        "outline-variant": "#c2c8c7",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#424848",
+                        "secondary": "#006a62",
+                        "on-background": "#161d1d",
+                        "tertiary-fixed-dim": "#89d4cd",
+                        "primary": "#006a63",
+                        "on-secondary-container": "#006f66",
+                        "on-surface": "#161d1d",
+                        "primary-fixed": "#8ef4e9",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#71d7cd",
+                        "surface-container": "#e9efef",
+                        "error": "#ba1a1a",
+                        "background": "#f4fafa",
+                        "primary-container": "#a2fff4",
+                        "surface-container-highest": "#dde4e4",
+                        "on-secondary-fixed-variant": "#005049",
+                        "surface-container-high": "#e3e9e9",
+                        "secondary-fixed-dim": "#66d9cc",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2b3232",
+                        "tertiary-container": "#b0fcf4",
+                        "tertiary-fixed": "#a4f0e9",
+                        "inverse-on-surface": "#ecf2f2",
+                        "outline": "#727878",
+                        "on-tertiary-fixed": "#00201e",
+                        "surface-dim": "#d5dbdb",
+                        "on-primary-fixed": "#00201d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .before-after-slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .after-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip-path: inset(0 50% 0 0);
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: white;
+            cursor: ew-resize;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .slider-handle::after {
+            content: '↔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        }
+
+        #mobile-menu.hidden-custom {
+            transform: translateX(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #mobile-menu.show-custom {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .section-padding {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-padding {
+                padding-top: 8rem;
+                padding-bottom: 8rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body overflow-x-hidden">
+    <!-- Main Header -->
+    <header class="fixed top-0 w-full z-50">
+        <!-- Project Status Banner -->
+        <div class="w-full bg-primary/20 backdrop-blur-md border-b border-white/10 py-1.5 px-4 text-center">
+            <p class="text-[9px] md:text-xs font-bold tracking-widest uppercase text-primary">
+                Proprietary Project Sample — <span class="hidden md:inline">Confidential UI/UX demonstration.</span>
+                <span class="md:hidden">Confidential Demo</span>
+            </p>
+        </div>
+        <!-- Navigation Bar -->
+        <nav class="w-full glass-effect shadow-sm">
+            <div
+                class="flex justify-between items-center px-6 md:px-12 py-3 md:py-4 max-w-7xl mx-auto font-headline tracking-tight">
+                <a href="#" class="flex items-center gap-3 group">
+                    <img src="icon.png" alt="Logo"
+                        class="w-8 h-8 md:w-10 md:h-10 object-contain group-hover:scale-105 transition-transform">
+                    <span
+                        class="text-base md:text-lg font-bold tracking-tighter text-teal-900 dark:text-teal-50 hidden sm:block">Aura
+                        Dental</span>
+                </a>
+                <div class="hidden lg:flex items-center gap-10">
+                    <a class="text-primary font-bold transition-all duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-0.5 after:bg-primary"
+                        href="#treatments">Treatments</a>
+                    <a class="text-slate-600 dark:text-slate-400 hover:text-teal-500 transition-colors duration-300"
+                        href="#gallery">Gallery</a>
+                    <a class="text-slate-600 dark:text-slate-400 hover:text-teal-500 transition-colors duration-300"
+                        href="#about">About</a>
+                    <a class="text-slate-600 dark:text-slate-400 hover:text-teal-500 transition-colors duration-300"
+                        href="#contact">Contact</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="hidden md:block bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-2.5 rounded-xl font-semibold scale-95 active:opacity-80 transition-all shadow-sm"
+                        onclick="openModal()">
+                        Book Appointment
+                    </button>
+                    <button class="lg:hidden text-teal-900 dark:text-teal-50 p-2 -mr-2" id="menu-toggle"
+                        onclick="toggleMobileMenu()">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 z-[100] glass-effect hidden-custom h-screen flex flex-col p-8" id="mobile-menu">
+        <div class="flex justify-between items-center mb-16">
+            <span class="text-xl font-bold tracking-tighter text-teal-900 dark:text-teal-50">Cosmetic Dental
+                Studio</span>
+            <button class="text-teal-900 dark:text-teal-50" onclick="toggleMobileMenu()">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 text-3xl font-headline font-bold text-on-background">
+            <a class="hover:text-primary transition-colors" href="#treatments"
+                onclick="toggleMobileMenu()">Treatments</a>
+            <a class="hover:text-primary transition-colors" href="#gallery" onclick="toggleMobileMenu()">Gallery</a>
+            <a class="hover:text-primary transition-colors" href="#about" onclick="toggleMobileMenu()">About</a>
+            <a class="hover:text-primary transition-colors" href="#contact" onclick="toggleMobileMenu()">Contact</a>
+        </div>
+        <div class="mt-auto">
+            <button
+                class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-4 rounded-xl font-bold text-xl shadow-lg"
+                onclick="toggleMobileMenu(); openModal();">
+                Book Appointment
+            </button>
+            <p class="text-center text-sm text-on-surface-variant mt-6 opacity-60">© 2026 Aura Dental Collective</p>
+        </div>
+    </div>
+    <main class="pt-32 md:pt-40">
+        <!-- Hero Section -->
+        <section class="relative px-6 md:px-8 py-12 lg:py-32 max-w-7xl mx-auto overflow-hidden lg:overflow-visible">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 md:space-y-8 text-center lg:text-left">
+                    <h1
+                        class="text-4xl md:text-6xl lg:text-7xl font-headline font-extrabold tracking-tighter text-on-background leading-tight md:leading-none">
+                        Designing Your <br class="hidden md:block" />
+                        <span class="text-primary">Perfect Smile</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-on-surface-variant max-w-md mx-auto lg:mx-0 leading-relaxed">
+                        Experience the intersection of clinical precision and luxury care. Our bespoke aesthetic
+                        dentistry
+                        transform lives, one smile at a time.
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                        <button
+                            class="w-full md:w-auto bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-primary/20 transition-all"
+                            onclick="openModal()">
+                            Book an Initial Scan
+                        </button>
+                    </div>
+                </div>
+                <div class="relative group mt-8 lg:mt-0">
+                    <div
+                        class="absolute -inset-4 bg-primary-container/20 rounded-xl blur-2xl group-hover:bg-primary-container/30 transition-all duration-700">
+                    </div>
+                    <div class="relative h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                        <img alt="Clinical Success"
+                            class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Modern high-end dental clinic interior with soft sunlight and a smiling patient receiving a consultation from a professional dentist"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpcXuAzuSC5X9T6jJI6T4myINEahkXPjYe2w2Kds7lDCIBZWoI6lU0JTRpz7oQiSsPrDPkmkjOTX2vR60iFU4ODqVIZalWJl48gao4yXwfknEVLeSkjtIq1UoNQKvY6VLnh0ZKjKNBQ4axsJnsngQ0egSDqtyhHxzrQqgRGWIqYWcoYMPE1FkrpfVv_Ry3wxv8MHgNIMSlweRAal7grxZW-hGZQHnoqSWwAuPBU_Qo9KjNdtned5qmKgn2SUb1Z_MQ6Q8qM7rGHcGd" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Trust Bar -->
+        <section class="bg-surface-container-low py-12 px-8 overflow-hidden">
+            <div
+                class="max-w-7xl mx-auto flex flex-wrap justify-center items-center gap-6 md:gap-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-3xl">verified</span>
+                    <span class="font-headline font-bold text-sm tracking-widest uppercase">Dental Association</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-3xl">award_star</span>
+                    <span class="font-headline font-bold text-sm tracking-widest uppercase">Best of City 2026</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-3xl">workspace_premium</span>
+                    <span class="font-headline font-bold text-sm tracking-widest uppercase">ISO Certified 2023</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-3xl">clinical_notes</span>
+                    <span class="font-headline font-bold text-sm tracking-widest uppercase">Health Excellence</span>
+                </div>
+            </div>
+        </section>
+        <!-- Treatments Section -->
+        <section class="px-6 md:px-12 section-padding max-w-7xl mx-auto" id="treatments">
+            <div class="text-center mb-16 md:mb-24">
+                <h2 class="text-3xl md:text-5xl font-headline font-extrabold text-on-surface mb-6">Expert Cosmetic
+                    Treatments</h2>
+                <div class="h-1.5 w-24 bg-primary-container mx-auto rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="group bg-surface-container-lowest p-10 rounded-xl transition-all duration-500 hover:-translate-y-2">
+                    <div
+                        class="w-16 h-16 bg-tertiary-container rounded-xl flex items-center justify-center mb-8 text-on-tertiary-container group-hover:bg-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl"
+                            style="font-variation-settings: 'FILL' 1;">medical_services</span>
+                    </div>
+                    <h3 class="text-2xl font-headline font-bold mb-4">Dental Implants</h3>
+                    <p class="text-on-surface-variant leading-relaxed mb-6">Permanent solutions for missing teeth that
+                        look,
+                        feel, and function like natural ones.</p>
+                    <a class="text-primary font-semibold flex items-center gap-2 hover:gap-4 transition-all" href="#">
+                        Learn More <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="group bg-surface-container-lowest p-10 rounded-xl transition-all duration-500 hover:-translate-y-2">
+                    <div
+                        class="w-16 h-16 bg-tertiary-container rounded-xl flex items-center justify-center mb-8 text-on-tertiary-container group-hover:bg-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl"
+                            style="font-variation-settings: 'FILL' 1;">dentistry</span>
+                    </div>
+                    <h3 class="text-2xl font-headline font-bold mb-4">Porcelain Veneers</h3>
+                    <p class="text-on-surface-variant leading-relaxed mb-6">Crafting a flawless, natural appearance with
+                        high-quality porcelain layers.</p>
+                    <a class="text-primary font-semibold flex items-center gap-2 hover:gap-4 transition-all" href="#">
+                        Learn More <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="group bg-surface-container-lowest p-10 rounded-xl transition-all duration-500 hover:-translate-y-2">
+                    <div
+                        class="w-16 h-16 bg-tertiary-container rounded-xl flex items-center justify-center mb-8 text-on-tertiary-container group-hover:bg-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl"
+                            style="font-variation-settings: 'FILL' 1;">flare</span>
+                    </div>
+                    <h3 class="text-2xl font-headline font-bold mb-4">Professional Whitening</h3>
+                    <p class="text-on-surface-variant leading-relaxed mb-6">Brighten your smile in just one visit with
+                        our
+                        clinical whitening system.</p>
+                    <a class="text-primary font-semibold flex items-center gap-2 hover:gap-4 transition-all" href="#">
+                        Learn More <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Gallery Section -->
+        <section class="px-6 md:px-12 section-padding max-w-7xl mx-auto" id="gallery">
+            <div class="text-center mb-16 md:mb-24">
+                <h2 class="text-3xl md:text-5xl font-headline font-extrabold text-on-surface mb-6">Patient
+                    Transformations
+                </h2>
+                <p class="text-on-surface-variant max-w-lg mx-auto">Witness the intersection of aesthetic artistry and
+                    clinical precision.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 h-auto md:h-[600px]">
+                <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-2xl">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        src="gallery_1.png" alt="Gallery 1">
+                </div>
+                <div class="md:col-span-2 relative group overflow-hidden rounded-2xl h-[250px] md:h-auto">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        src="gallery_2.png" alt="Gallery 2">
+                </div>
+                <div class="relative group overflow-hidden rounded-2xl h-[200px] md:h-auto">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        src="gallery_3.png" alt="Gallery 3">
+                </div>
+                <div class="relative group overflow-hidden rounded-2xl h-[200px] md:h-auto">
+                    <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        src="gallery_4.png" alt="Gallery 4">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="bg-surface-container-low px-6 md:px-12 section-padding overflow-hidden" id="about">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2 space-y-8">
+                    <span class="text-xs font-bold tracking-widest uppercase text-primary">The Clinique
+                        Philosophy</span>
+                    <h2
+                        class="text-3xl md:text-5xl font-headline font-extrabold tracking-tighter text-on-surface leading-tight">
+                        Artistic Care Meets <br /> Clinical Precision</h2>
+                    <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed">
+                        Founded on the principle of "Ethereal Aestheticism," Aura Dental Studio redefines the clinical
+                        encounter. We believe that cosmetic dentistry is as much about psychological comfort as it is
+                        about
+                        porcelain and light.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8 pt-4">
+                        <div>
+                            <p class="text-3xl font-headline font-bold text-primary">15+</p>
+                            <p class="text-sm text-on-surface-variant">Years of Artistry</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-headline font-bold text-primary">5k+</p>
+                            <p class="text-sm text-on-surface-variant">Perfect Smiles</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative">
+                    <div class="absolute -inset-4 bg-primary/5 rounded-2xl blur-xl"></div>
+                    <img class="relative w-full h-[400px] md:h-[600px] object-cover rounded-2xl shadow-xl"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGtOh4sHSqN8b7GIiwyYSBsvUcwSDQ-v-4hyml4Xqt5l8r2jLcqac-Lh2tyaSNraBqUzAvGrUBREPVEd9CIYEU8MASIFwd9KGBviUwLSfer0mwDSSilwj-3swE6bGguH6gV9I5zw7QHuX3VZb1a1YVkI6m0wmkkoIGRtpDktRGSVOpDBdxwbHrKHJTmiKlCWKUs4JgcFbvYr_OWvXrqSsqsrh66o1hlAolMH5P7V5Px4Odp4KP2JVrjRwAIisvXN8k4k_KCETDSE4Z"
+                        alt="Studio Interior">
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="px-6 md:px-12 section-padding max-w-7xl mx-auto" id="contact">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+                <div class="space-y-12">
+                    <div class="space-y-6">
+                        <h2 class="text-3xl md:text-5xl font-headline font-extrabold text-on-surface tracking-tighter">
+                            Get
+                            in Touch</h2>
+                        <p class="text-lg text-on-surface-variant">Ready to transform your smile? Reach out for a
+                            bespoke
+                            consultation.</p>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary">location_on</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-lg mb-1">Our Studio</h4>
+                                <p class="text-on-surface-variant">Shahfaisal Town, Shahrah-e-Faisal<br />Karachi,
+                                    Pakistan
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-primary">phone</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline font-bold text-lg mb-1">WhatsApp</h4>
+                                <p class="text-on-surface-variant">+92 321 2481412</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-surface-container-low p-8 md:p-12 rounded-2xl">
+                    <form class="space-y-6">
+                        <div class="space-y-4">
+                            <input
+                                class="w-full bg-white border-none rounded-xl px-6 py-4 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 transition-all"
+                                type="text" placeholder="Your Name">
+                            <input
+                                class="w-full bg-white border-none rounded-xl px-6 py-4 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 transition-all"
+                                type="email" placeholder="Email Address">
+                            <textarea
+                                class="w-full bg-white border-none rounded-xl px-6 py-4 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 transition-all h-32"
+                                placeholder="Tell us about your smile goals"></textarea>
+                        </div>
+                        <button
+                            class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-primary-tint transition-all"
+                            type="button" onclick="openConfirmation()">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-slate-50 dark:bg-slate-950 w-full py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 px-8 max-w-7xl mx-auto font-inter text-sm">
+            <!-- Branding & Info -->
+            <div class="space-y-6">
+                <span class="text-lg font-bold text-teal-900 dark:text-teal-50">Cosmetic Dental Studio</span>
+                <p class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs">
+                    Transforming the dental experience through art, science, and unparalleled patient care.
+                </p>
+                <div class="space-y-3">
+                    <p class="flex items-center gap-3 text-teal-800 dark:text-teal-200">
+                        <span class="material-symbols-outlined text-lg">call</span> +92 321 2481412
+                    </p>
+                    <p class="flex items-center gap-3 text-teal-800 dark:text-teal-200">
+                        <span class="material-symbols-outlined text-lg">mail</span> cinoriumadmin@gmail.com
+                    </p>
+                    <p class="flex items-center gap-3 text-teal-800 dark:text-teal-200">
+                        <span class="material-symbols-outlined text-lg">location_on</span> Shahfaisal Town,
+                        Shahrah-e-Faisal
+                        Karachi, Pakistan
+                    </p>
+                </div>
+            </div>
+            <!-- Navigation Links -->
+            <div class="grid grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h4
+                        class="font-headline font-bold text-teal-900 dark:text-teal-50 uppercase tracking-widest text-xs">
+                        Menu</h4>
+                    <nav class="flex flex-col gap-3">
+                        <a class="text-teal-600 dark:text-teal-300 font-semibold hover:text-teal-400 transition-colors"
+                            href="#">Treatments</a>
+                        <a class="text-slate-500 dark:text-slate-400 hover:text-teal-400 transition-colors"
+                            href="#">Gallery</a>
+                        <a class="text-slate-500 dark:text-slate-400 hover:text-teal-400 transition-colors"
+                            href="#">Patient
+                            Portal</a>
+                    </nav>
+                </div>
+                <div class="space-y-4">
+                    <h4
+                        class="font-headline font-bold text-teal-900 dark:text-teal-50 uppercase tracking-widest text-xs">
+                        Legal</h4>
+                    <nav class="flex flex-col gap-3">
+                        <a class="text-slate-500 dark:text-slate-400 hover:text-teal-400 transition-colors"
+                            href="#">Privacy
+                            Policy</a>
+                        <a class="text-slate-500 dark:text-slate-400 hover:text-teal-400 transition-colors"
+                            href="#">Terms
+                            of Service</a>
+                    </nav>
+                </div>
+            </div>
+            <!-- Map Integration -->
+            <div class="space-y-4">
+                <h4 class="font-headline font-bold text-teal-900 dark:text-teal-50 uppercase tracking-widest text-xs">
+                    Find
+                    Us</h4>
+                <div
+                    class="h-48 rounded-xl overflow-hidden grayscale contrast-125 opacity-80 hover:grayscale-0 transition-all duration-700">
+                    <img alt="Map location" class="w-full h-full object-cover"
+                        data-alt="A stylized minimalist map of a modern metropolitan city center with teal location markers for a dental studio"
+                        data-location="San Francisco"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGtOh4sHSqN8b7GIiwyYSBsvUcwSDQ-v-4hyml4Xqt5l8r2jLcqac-Lh2tyaSNraBqUzAvGrUBREPVEd9CIYEU8MASIFwd9KGBviUwLSfer0mwDSSilwj-3swE6bGguH6gV9I5zw7QHuX3VZb1a1YVkI6m0wmkkoIGRtpDktRGSVOpDBdxwbHrKHJTmiKlCWKUs4JgcFbvYr_OWvXrqSsqsrh66o1hlAolMH5P7V5Px4Odp4KP2JVrjRwAIisvXN8k4k_KCETDSE4Z" />
+                </div>
+                <a class="text-teal-600 dark:text-teal-300 flex items-center gap-2 hover:gap-3 transition-all font-semibold"
+                    href="#">
+                    Open Google Maps <span class="material-symbols-outlined">map</span>
+                </a>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto px-8 mt-24 pt-8 border-t border-transparent bg-surface-container flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-xs rounded-xl">
+            <div class="flex flex-col gap-1 items-center md:items-start text-center md:text-left">
+                <p>© 2026 Cosmetic Dental Studio. All rights reserved.</p>
+                <p class="opacity-60">Developed by <a href="https://cinorium.com/"
+                        class="text-primary font-bold hover:underline">CINORIUM</a> & <a
+                        href="https://cnitsolutions.com/" class="text-primary font-bold hover:underline">CN IT
+                        Solutions</a></p>
+            </div>
+            <div class="flex gap-6">
+                <a href="https://www.instagram.com/cinorium_/"><span
+                        class="hover:text-primary cursor-pointer transition-colors">Instagram</span></a>
+                <a href="https://www.linkedin.com/in/cinorium/"><span
+                        class="hover:text-primary cursor-pointer transition-colors">LinkedIn</span></a>
+                <a href="https://www.facebook.com/cinorium"><span
+                        class="hover:text-primary cursor-pointer transition-colors">Facebook</span></a>
+            </div>
+        </div>
+    </footer>
+    <!-- Booking Success Confirmation Modal -->
+    <div class="fixed inset-0 z-[110] hidden items-center justify-center p-4" id="confirmation-modal">
+        <div class="absolute inset-0 bg-on-background/60 backdrop-blur-md" onclick="closeConfirmation()"></div>
+        <div
+            class="relative w-full max-w-2xl bg-surface rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-500">
+            <div class="p-8 md:p-12 text-center">
+                <!-- Success Icon -->
+                <div class="mb-8 relative inline-block">
+                    <div class="w-24 h-24 rounded-full bg-surface-container-low flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-5xl"
+                            style="font-variation-settings: 'FILL' 0; font-weight: 100;">favorite</span>
+                    </div>
+                    <div
+                        class="absolute inset-0 w-24 h-24 rounded-full border border-primary/10 scale-125 animate-ping opacity-20">
+                    </div>
+                </div>
+
+                <h2 class="font-headline font-extrabold text-4xl text-on-surface tracking-tighter mb-4">Your Smile
+                    Journey
+                    Starts Here</h2>
+                <p class="text-on-surface-variant text-lg mb-8 max-w-md mx-auto">Thank you for booking your initial
+                    scan.
+                    We've sent a confirmation email to your inbox.</p>
+
+                <div
+                    class="bg-surface-container-lowest rounded-xl p-6 text-left mb-8 border border-outline-variant/10 shadow-sm">
+                    <span class="text-xs font-bold tracking-widest uppercase text-primary/60 mb-4 block">Reservation
+                        Summary</span>
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="material-symbols-outlined text-primary/40">calendar_today</span>
+                        <p class="font-medium">Initial Aesthetic Consultation</p>
+                    </div>
+                    <p
+                        class="text-[11px] text-on-surface-variant leading-relaxed opacity-70 italic border-t border-outline-variant/10 pt-4">
+                        NOTE: This is a proprietary project sample. The booking request has been forwarded to <span
+                            class="font-bold underline text-primary">cinoriumadmin@gmail.com</span> for demonstration.
+                    </p>
+                </div>
+
+                <button
+                    class="bg-primary text-on-primary px-8 py-3 rounded-xl font-bold hover:bg-primary/90 transition-all mb-6"
+                    onclick="closeConfirmation()">
+                    Return to Studio
+                </button>
+
+                <div class="pt-6 border-t border-outline-variant/10">
+                    <p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold opacity-40">
+                        Created by <a href="https://cinorium.com/"
+                            class="hover:text-primary transition-colors">CINORIUM</a>
+                        & <a href="https://cnitsolutions.com/" class="hover:text-primary transition-colors">CN IT
+                            SOLUTIONS</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fixed inset-0 z-[100] hidden items-center justify-center p-4" id="booking-modal">
+        <div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div
+            class="relative w-full max-w-lg bg-surface rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            <div class="p-6 md:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl md:text-3xl font-headline font-extrabold text-on-background tracking-tighter">
+                        Book
+                        Your Consultation</h2>
+                    <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="closeModal()">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <p class="text-on-surface-variant mb-6 text-sm md:text-base">Begin your journey to a perfect smile. Fill
+                    out
+                    the form below and our team will contact you shortly.</p>
+
+                <div class="bg-primary/5 p-4 rounded-xl border border-primary/10 mb-8">
+                    <p class="text-xs text-primary font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">info</span>
+                        SAMPLE WORK NOTICE
+                    </p>
+                    <p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">
+                        This is a demonstration landing page. All inquiries will be routed to <span
+                            class="font-bold underline">cinoriumadmin@gmail.com</span>. Proprietary clinic details are
+                        hidden for confidentiality.
+                    </p>
+                </div>
+
+                <form class="space-y-4 md:space-y-5" onsubmit="event.preventDefault(); submitForm();">
+                    <div>
+                        <label class="block text-sm font-bold text-on-surface mb-2 tracking-wide uppercase opacity-70"
+                            for="name">Full Name</label>
+                        <input
+                            class="w-full px-4 py-3 rounded-lg border-none bg-surface-container-high focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all"
+                            id="name" placeholder="Jane Doe" required="" type="text" />
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label
+                                class="block text-sm font-bold text-on-surface mb-2 tracking-wide uppercase opacity-70"
+                                for="email">Email Address</label>
+                            <input
+                                class="w-full px-4 py-3 rounded-lg border-none bg-surface-container-high focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all"
+                                id="email" placeholder="jane@example.com" required="" type="email" />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-bold text-on-surface mb-2 tracking-wide uppercase opacity-70"
+                                for="phone">Phone Number</label>
+                            <input
+                                class="w-full px-4 py-3 rounded-lg border-none bg-surface-container-high focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all"
+                                id="phone" placeholder="(555) 000-0000" required="" type="tel" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-on-surface mb-2 tracking-wide uppercase opacity-70"
+                            for="interest">Treatment Interest</label>
+                        <select
+                            class="w-full px-4 py-3 rounded-lg border-none bg-surface-container-high focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all"
+                            id="interest">
+                            <option>Dental Implants</option>
+                            <option>Porcelain Veneers</option>
+                            <option>Professional Whitening</option>
+                            <option>Other / General Inquiry</option>
+                        </select>
+                    </div>
+                    <button
+                        class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary font-extrabold py-4 rounded-xl shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-lg mt-4"
+                        type="submit">
+                        Schedule Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openModal() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openConfirmation() {
+            const modal = document.getElementById('confirmation-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeConfirmation() {
+            const modal = document.getElementById('confirmation-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitForm() {
+            // Logic for Email POST or mailto as per requirement
+            const email = 'cinoriumadmin@gmail.com';
+            const name = document.getElementById('name').value;
+            const interest = document.getElementById('interest').value;
+            const body = `Name: ${name}%0D%0AInterest: ${interest}`;
+
+            // Direct simulation for demo
+            console.log('Posting to:', email);
+
+            // Open mailto in background or just show success
+            const mailLink = `mailto:${email}?subject=New Consultation Request&body=${body}`;
+
+            // In a real POST setup, we would use fetch() here.
+            // For this demo, we'll proceed directly to the confirmation modal.
+            closeModal();
+            openConfirmation();
+
+            // Optional: Trigger mailto after a short delay if requested
+            // setTimeout(() => { window.location.href = mailLink; }, 500);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden-custom')) {
+                menu.classList.remove('hidden-custom');
+                menu.classList.add('show-custom');
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('hidden-custom');
+                menu.classList.remove('show-custom');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Before/After Slider Logic
+        const slider = document.getElementById('smile-slider');
+        const handle = document.getElementById('slider-handle');
+        const afterImg = document.getElementById('after-img-container');
+
+        function moveSlider(e) {
+            let x;
+            const rect = slider.getBoundingClientRect();
+            if (e.type.includes('touch')) {
+                x = e.touches[0].clientX - rect.left;
+            } else {
+                x = e.clientX - rect.left;
+            }
+
+            let width = slider.offsetWidth;
+            if (x < 0) x = 0;
+            if (x > width) x = width;
+
+            let percent = (x / width) * 100;
+            handle.style.left = percent + '%';
+            afterImg.style.clipPath = `inset(0 0 0 ${percent}%)`;
+        }
+
+        slider.addEventListener('mousemove', moveSlider);
+        slider.addEventListener('touchmove', moveSlider, { passive: true });
+        slider.addEventListener('touchstart', moveSlider, { passive: true });
+
+        // service worker registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registered', reg))
+                    .catch(err => console.log('SW error', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
